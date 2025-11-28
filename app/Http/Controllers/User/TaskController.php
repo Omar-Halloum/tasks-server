@@ -6,18 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Task;
 use App\Services\TaskServices;
-use App\Traits\ResponseTrait;
 
 class TaskController extends Controller{
 
     function getAllTasks($id = null){
         if(!$id){
             $tasks = Task::all();
-            return ResponseTrait::responseJSON($tasks);
+            return $this->responseJSON($tasks);
         }
 
         $task = Task::find($id);
-        return ResponseTrait::responseJSON($task);
+        return $this->responseJSON($task);
     }
 
     function addOrUpdateTask(Request $request, $id = "add"){
@@ -26,7 +25,7 @@ class TaskController extends Controller{
         }else{
             $task = Task::find($id);
             if(!$task){
-                return ResponseTrait::responseJSON(null, "failure", 400);
+                return $this->responseJSON(null, "failure", 400);
             }
         }
 
@@ -35,10 +34,10 @@ class TaskController extends Controller{
         $task->description = $request["description"];
 
         if($task->save()){
-            return ResponseTrait::responseJSON($task);
+            return $this->responseJSON($task);
         }
 
-        return ResponseTrait::responseJSON(null, "failure", 400);
+        return $this->responseJSON(null, "failure", 400);
     }
 
 }
