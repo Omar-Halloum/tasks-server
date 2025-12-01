@@ -9,9 +9,12 @@ use App\Http\Controllers\Admin\TaskController as TaskAdminController;
 
 //Authenticated Routes
 Route::group(["prefix" => "v0.1", "middleware" => "auth:api"], function(){
-    Route::group(["prefix" => "user"], function(){
-        Route::get('/tasks/{id?}', [TaskController::class, "getAllTasks"])->name("task-listing");
-        Route::post('/add_update_task/{id?}', [TaskController::class, "addOrUpdateTask"]);
+    
+    Route::group(["middleware" => "auth.payment"], function(){
+        Route::group(["prefix" => "user"], function(){
+            Route::get('/tasks/{id?}', [TaskController::class, "getAllTasks"])->name("task-listing");
+            Route::post('/add_update_task/{id?}', [TaskController::class, "addOrUpdateTask"]);
+        });
     });
 
     //Authenticated Routes
@@ -31,15 +34,17 @@ Route::get('/error', [AuthController::class, "displayError"])->name("login");
 /*
 1- Routing DONE
 2- Migrations DONE
-3- Controllers
-4- Models 
+3- Controllers DONE
 5- Services DONE
-6- Seeders / Factory
 6- Traits DONE
 
-7- Middlewares
-8- Advancded Models 
+7- Middlewares DONE
+6- Seeders / Factory DONE
 9- Testing
+
+4- Models 
+8- Advancded Models 
+
 */  
 
 
